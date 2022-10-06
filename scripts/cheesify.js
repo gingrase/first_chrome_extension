@@ -1,6 +1,14 @@
-function cheesify() {
-  // TODO: Add the image replacement script here
-}
+// Listen for messages on the content page
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.action === 'cheesify') cheesify();
+  }
+);
 
-// TODO: Write a function to listen for messages on the content page using chrome.runtime.onMessage
-  
+// Our image replacement script
+function cheesify() {
+  document.querySelectorAll('img').forEach( (img) => {
+    img.src = `https://source.unsplash.com/collection/8884129/${img.width}x${img.height}/?cheese&${Math.random()}`;
+    img.srcset = img.src;
+  })
+}
